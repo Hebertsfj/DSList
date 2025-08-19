@@ -4,6 +4,7 @@ package com.example.DSList.services;
 import com.example.DSList.DTO.GameDTO;
 import com.example.DSList.DTO.GameMinDTO;
 import com.example.DSList.entities.Games;
+import com.example.DSList.projections.GameMinProjection;
 import com.example.DSList.repositories.GamesRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +28,13 @@ public class GameService {
         List<GameMinDTO> dto = result.stream().map(x -> new GameMinDTO(x)).toList();
         return dto;
     }
+    @Transactional(readOnly = true)
+    public List<GameMinDTO> findByList(Long listId){
+        List<GameMinProjection> result = gamesRepository.searchByList(listId);
+        return result.stream().map(x -> new GameMinDTO(x)).toList();
+
+    }
+
 
 
 }
